@@ -19,23 +19,14 @@
                             700: '#c2410c',
                             900: '#7c2d12',
                         }
-                    },
-                    animation: {
-                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Hide scrollbar for category menu */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .glass-nav {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -45,7 +36,7 @@
 <body class="bg-gray-50 text-gray-800 font-sans antialiased">
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass-nav border-b border-gray-200 shadow-sm transition-all duration-300" id="navbar">
+    <nav class="fixed w-full z-50 glass-nav border-b border-gray-200 shadow-sm" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
@@ -57,39 +48,32 @@
                 <!-- Desktop Search -->
                 <div class="hidden md:flex flex-1 max-w-xl mx-8">
                     <div class="relative w-full">
-                        <input type="text" class="w-full bg-gray-100 border border-transparent rounded-full py-2 pl-12 pr-4 focus:outline-none focus:bg-white focus:border-brand-500 focus:ring-2 focus:ring-brand-200 transition-all text-sm" placeholder="Search for electronics, fashion, extrape deals...">
+                        <input type="text" id="searchInput" onkeyup="searchDeals()" class="w-full bg-gray-100 border border-transparent rounded-full py-2 pl-12 pr-4 focus:outline-none focus:bg-white focus:border-brand-500 focus:ring-2 focus:ring-brand-200 transition-all text-sm" placeholder="Search for electronics, fashion, extrape deals...">
                         <div class="absolute left-4 top-2.5 text-gray-400">
                             <i class="fas fa-search"></i>
                         </div>
                     </div>
                 </div>
 
-                <!-- Icons -->
+                <!-- Action Button -->
                 <div class="flex items-center space-x-4">
-                    <button class="text-gray-500 hover:text-brand-600 transition-colors p-2">
-                        <i class="fab fa-telegram text-xl"></i>
-                    </button>
-                    <button class="md:hidden text-gray-500 hover:text-brand-600 transition-colors p-2">
-                        <i class="fas fa-search text-xl"></i>
-                    </button>
-                    <button class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg shadow-brand-500/30 transition-all transform hover:-translate-y-0.5">
-                        Join Community
-                    </button>
+                    <a href="https://t.me" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-md flex items-center gap-2">
+                        <i class="fab fa-telegram-plane"></i> Join Telegram
+                    </a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Categories -->
+    <!-- Categories Bar -->
     <div class="pt-20 pb-4 bg-white border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex space-x-6 overflow-x-auto no-scrollbar py-2" id="category-menu">
-                <button onclick="filterDeals('all', this)" class="category-btn active whitespace-nowrap px-4 py-1.5 rounded-full bg-brand-50 text-brand-700 font-semibold text-sm border border-brand-200 transition-colors">🔥 All Deals</button>
-                <button onclick="filterDeals('electronics', this)" class="category-btn whitespace-nowrap px-4 py-1.5 rounded-full text-gray-600 hover:bg-gray-100 font-medium text-sm transition-colors"><i class="fas fa-mobile-alt mr-1 text-gray-400"></i> Electronics</button>
-                <button onclick="filterDeals('fashion', this)" class="category-btn whitespace-nowrap px-4 py-1.5 rounded-full text-gray-600 hover:bg-gray-100 font-medium text-sm transition-colors"><i class="fas fa-tshirt mr-1 text-gray-400"></i> Fashion</button>
-                <button onclick="filterDeals('laptops', this)" class="category-btn whitespace-nowrap px-4 py-1.5 rounded-full text-gray-600 hover:bg-gray-100 font-medium text-sm transition-colors"><i class="fas fa-laptop mr-1 text-gray-400"></i> Laptops</button>
-                <button onclick="filterDeals('home', this)" class="category-btn whitespace-nowrap px-4 py-1.5 rounded-full text-gray-600 hover:bg-gray-100 font-medium text-sm transition-colors"><i class="fas fa-home mr-1 text-gray-400"></i> Home & Kitchen</button>
-                <button onclick="filterDeals('beauty', this)" class="category-btn whitespace-nowrap px-4 py-1.5 rounded-full text-gray-600 hover:bg-gray-100 font-medium text-sm transition-colors"><i class="fas fa-pump-soap mr-1 text-gray-400"></i> Beauty</button>
+            <div class="flex space-x-3 overflow-x-auto no-scrollbar py-1" id="category-menu">
+                <button onclick="filterCategory('all', this)" class="cat-pill active px-4 py-1.5 rounded-full bg-brand-500 text-white font-semibold text-sm transition-all shadow-sm">🔥 All Deals</button>
+                <button onclick="filterCategory('electronics', this)" class="cat-pill px-4 py-1.5 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium text-sm transition-all">📱 Electronics</button>
+                <button onclick="filterCategory('fashion', this)" class="cat-pill px-4 py-1.5 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium text-sm transition-all">👕 Fashion</button>
+                <button onclick="filterCategory('beauty', this)" class="cat-pill px-4 py-1.5 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium text-sm transition-all">💄 Beauty</button>
+                <button onclick="filterCategory('home', this)" class="cat-pill px-4 py-1.5 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium text-sm transition-all">🏠 Home & Kitchen</button>
             </div>
         </div>
     </div>
@@ -98,424 +82,203 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
         <!-- Hero: Deal of the Day -->
-        <div class="bg-gradient-to-r from-brand-600 to-orange-400 rounded-2xl shadow-xl overflow-hidden mb-12 relative">
-            <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-white opacity-10 rounded-full blur-2xl"></div>
-            <div class="md:flex">
-                <div class="md:w-1/2 p-8 md:p-12 flex flex-col justify-center relative z-10">
-                    <span class="inline-block px-3 py-1 bg-white text-brand-600 text-xs font-black uppercase tracking-wider rounded-full w-max mb-4 shadow-sm">Deal of the Day</span>
-                    <h2 class="text-3xl md:text-5xl font-black text-white leading-tight mb-4">Apple iPhone 15 (128GB)</h2>
-                    <p class="text-brand-50 text-lg mb-6">Massive price drop on Flipkart Big Billion Days. Use HDFC CC for extra flat ₹4,000 discount.</p>
-                    <div class="flex items-center space-x-4 mb-8">
-                        <span class="text-4xl font-black text-white">₹65,999</span>
-                        <span class="text-xl text-brand-100 line-through">₹79,900</span>
-                        <span class="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">-17% OFF</span>
-                    </div>
-                    <a href="#" class="bg-white text-brand-700 hover:bg-gray-50 text-center font-bold py-4 px-8 rounded-xl shadow-lg transition-all transform hover:-translate-y-1 w-full md:w-auto inline-block">
-                        Grab via ExtraPe <i class="fas fa-external-link-alt ml-2 text-sm"></i>
-                    </a>
-                </div>
-                <div class="md:w-1/2 bg-white/10 p-8 flex items-center justify-center relative z-10 backdrop-blur-sm">
-                    <!-- Placeholder for Hero Image -->
-                    <div class="w-64 h-64 bg-white/20 rounded-full flex items-center justify-center border-4 border-white/30 shadow-2xl">
-                        <i class="fas fa-mobile-alt text-8xl text-white"></i>
-                    </div>
-                </div>
+        <div class="bg-gradient-to-r from-brand-600 to-orange-400 rounded-3xl shadow-xl overflow-hidden mb-10 text-white p-8 md:p-12 relative">
+            <div class="max-w-2xl">
+                <span class="inline-block px-3 py-1 bg-white text-brand-600 text-xs font-black uppercase tracking-wider rounded-full mb-4 shadow-sm">⚡ Live Loot Deals</span>
+                <h1 class="text-3xl md:text-5xl font-black mb-4 leading-tight">Welcome to Deal Hunterz</h1>
+                <p class="text-brand-50 text-base md:text-lg mb-6">Sabhi online shopping platforms ki best deals, price drops aur ExtraPe cashback offers seedhe Telegram se auto-update hoti hain!</p>
             </div>
         </div>
 
-        <!-- NEW: Live Telegram Feed Section -->
-        <div class="mb-12">
-            <div class="flex items-center justify-between mb-6">
-                <div class="flex items-center">
-                    <h2 class="text-2xl font-bold text-gray-900 mr-3">Live Telegram Feed</h2>
-                    <span class="flex h-3 w-3 relative">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-                    </span>
-                    <span class="ml-2 text-sm text-red-500 font-bold">LIVE</span>
-                </div>
-                <a href="#" class="text-brand-600 font-medium text-sm hover:underline flex items-center">
-                    Join Channel <i class="fab fa-telegram ml-1 text-lg"></i>
-                </a>
+        <!-- Section Header -->
+        <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-3">
+                <h2 class="text-2xl font-bold text-gray-900" id="section-heading">Live Deals Feed</h2>
+                <span class="flex h-3 w-3 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                </span>
+                <span class="text-xs text-green-600 font-bold tracking-wide">AUTO-SYNCED</span>
             </div>
-            
-            <!-- Horizontal scrolling list of quick telegram deals -->
-            <div class="flex space-x-4 overflow-x-auto pb-4 no-scrollbar" id="telegram-feed">
-                <!-- JavaScript will populate this to simulate live data -->
-                <div class="animate-pulse flex space-x-4 w-full">
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 min-w-[300px] h-24"></div>
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 min-w-[300px] h-24"></div>
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 min-w-[300px] h-24"></div>
-                </div>
-            </div>
+            <span id="deal-count" class="text-xs bg-gray-200 px-2.5 py-1 rounded-full font-bold text-gray-700">Loading...</span>
         </div>
 
-        <!-- Section Title -->
-        <div class="flex justify-between items-end mb-6">
-            <h2 class="text-2xl font-bold text-gray-900" id="grid-title">Trending Deals in India</h2>
-            <div class="flex space-x-2">
-                <button class="p-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-600"><i class="fas fa-sort-amount-down"></i></button>
-                <button class="p-2 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-600"><i class="fas fa-filter"></i></button>
+        <!-- Deals Grid (Directly fed from Google Sheets) -->
+        <div id="deals-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16">
+            <!-- Loading placeholder -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 animate-pulse col-span-full text-center py-12">
+                <i class="fas fa-spinner fa-spin text-3xl text-brand-500 mb-3"></i>
+                <p class="text-gray-500 font-medium">Fetching live deals from Telegram channel...</p>
             </div>
-        </div>
-
-        <!-- Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12" id="deals-grid">
-            
-            <!-- Card 1 -->
-            <div class="deal-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col" data-category="electronics">
-                <div class="relative h-48 bg-gray-50 p-6 flex items-center justify-center overflow-hidden">
-                    <div class="absolute top-3 left-3 z-10 flex flex-col gap-2">
-                        <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded shadow-sm">60% OFF</span>
-                    </div>
-                    <div class="absolute top-3 right-3 z-10">
-                        <span class="bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-sm flex items-center"><i class="fas fa-shopping-cart mr-1"></i> Flipkart</span>
-                    </div>
-                    <i class="fas fa-tv text-6xl text-gray-300 group-hover:scale-110 transition-transform duration-500"></i>
-                </div>
-                <div class="p-5 flex-1 flex flex-col">
-                    <p class="text-xs text-brand-600 font-bold mb-1">ELECTRONICS</p>
-                    <h3 class="font-bold text-gray-900 text-lg mb-2 leading-tight line-clamp-2">Samsung 108 cm (43 inch) Crystal 4K Vivid Pro</h3>
-                    <p class="text-sm text-gray-500 mb-4 line-clamp-2">Lowest price since launch. Applies extra ₹2000 off on SBI cards.</p>
-                    <div class="mt-auto">
-                        <div class="flex items-center space-x-2 mb-4">
-                            <span class="text-2xl font-black text-gray-900">₹27,990</span>
-                            <span class="text-sm text-gray-400 line-through">₹49,900</span>
-                        </div>
-                        <button class="w-full bg-gray-900 hover:bg-gray-800 text-white font-semibold py-2.5 rounded-xl transition-colors text-sm shadow-md">
-                            Get Deal <i class="fas fa-arrow-right ml-1"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="deal-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col" data-category="electronics">
-                <div class="relative h-48 bg-gray-50 p-6 flex items-center justify-center overflow-hidden">
-                    <div class="absolute top-3 left-3 z-10 flex flex-col gap-2">
-                        <span class="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded shadow-sm">LOOT</span>
-                    </div>
-                    <div class="absolute top-3 right-3 z-10">
-                        <span class="bg-yellow-500 text-gray-900 text-[10px] font-bold px-2 py-1 rounded-full shadow-sm flex items-center"><i class="fab fa-amazon mr-1"></i> Amazon IN</span>
-                    </div>
-                    <i class="fas fa-headphones text-6xl text-gray-300 group-hover:scale-110 transition-transform duration-500"></i>
-                </div>
-                <div class="p-5 flex-1 flex flex-col">
-                    <p class="text-xs text-brand-600 font-bold mb-1">AUDIO</p>
-                    <h3 class="font-bold text-gray-900 text-lg mb-2 leading-tight line-clamp-2">boAt Airdopes 141 ANC TWS Earbuds</h3>
-                    <p class="text-sm text-gray-500 mb-4 line-clamp-2">Apply 5% coupon on page. Great battery life and ANC at this price.</p>
-                    <div class="mt-auto">
-                        <div class="flex items-center space-x-2 mb-4">
-                            <span class="text-2xl font-black text-gray-900">₹999</span>
-                            <span class="text-sm text-gray-400 line-through">₹3,490</span>
-                        </div>
-                        <button class="w-full bg-gray-900 hover:bg-gray-800 text-white font-semibold py-2.5 rounded-xl transition-colors text-sm shadow-md">
-                            Get Deal <i class="fas fa-arrow-right ml-1"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="deal-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col" data-category="fashion">
-                <div class="relative h-48 bg-gray-50 p-6 flex items-center justify-center overflow-hidden">
-                    <div class="absolute top-3 right-3 z-10">
-                        <span class="bg-pink-500 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-sm flex items-center"><i class="fas fa-tshirt mr-1"></i> Myntra</span>
-                    </div>
-                    <i class="fas fa-shoe-prints text-6xl text-gray-300 group-hover:scale-110 transition-transform duration-500"></i>
-                </div>
-                <div class="p-5 flex-1 flex flex-col">
-                    <p class="text-xs text-brand-600 font-bold mb-1">FASHION</p>
-                    <h3 class="font-bold text-gray-900 text-lg mb-2 leading-tight line-clamp-2">Puma Men's Running Shoes (Min 60% Off)</h3>
-                    <p class="text-sm text-gray-500 mb-4 line-clamp-2">End of reason sale live. Sizes running out quickly!</p>
-                    <div class="mt-auto">
-                        <div class="flex items-center space-x-2 mb-4">
-                            <span class="text-2xl font-black text-gray-900">₹1,249</span>
-                            <span class="text-sm text-gray-400 line-through">₹3,999</span>
-                        </div>
-                        <button class="w-full bg-gray-900 hover:bg-gray-800 text-white font-semibold py-2.5 rounded-xl transition-colors text-sm shadow-md">
-                            Get Deal <i class="fas fa-arrow-right ml-1"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="deal-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col" data-category="beauty">
-                <div class="relative h-48 bg-gray-50 p-6 flex items-center justify-center overflow-hidden">
-                     <div class="absolute top-3 left-3 z-10 flex flex-col gap-2">
-                        <span class="bg-purple-500 text-white text-xs font-bold px-2 py-1 rounded shadow-sm">BOGO</span>
-                    </div>
-                    <div class="absolute top-3 right-3 z-10">
-                        <span class="bg-teal-500 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-sm flex items-center">Nykaa</span>
-                    </div>
-                    <i class="fas fa-pump-soap text-6xl text-gray-300 group-hover:scale-110 transition-transform duration-500"></i>
-                </div>
-                <div class="p-5 flex-1 flex flex-col">
-                    <p class="text-xs text-brand-600 font-bold mb-1">BEAUTY</p>
-                    <h3 class="font-bold text-gray-900 text-lg mb-2 leading-tight line-clamp-2">Mamaearth Onion Shampoo (Buy 1 Get 1)</h3>
-                    <p class="text-sm text-gray-500 mb-4 line-clamp-2">Add 2 to cart. Use code OMG at checkout.</p>
-                    <div class="mt-auto">
-                        <div class="flex items-center space-x-2 mb-4">
-                            <span class="text-2xl font-black text-gray-900">₹349</span>
-                            <span class="text-sm text-gray-400 line-through">₹698</span>
-                        </div>
-                        <button class="w-full bg-gray-900 hover:bg-gray-800 text-white font-semibold py-2.5 rounded-xl transition-colors text-sm shadow-md">
-                            Get Deal <i class="fas fa-arrow-right ml-1"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-
-        <div class="text-center mb-16">
-            <button class="bg-white border-2 border-brand-500 text-brand-600 hover:bg-brand-50 font-bold py-3 px-8 rounded-full transition-colors" id="load-more-btn">
-                Load More Deals
-            </button>
-        </div>
-
-        <!-- Developer/Admin Guide: ExtraPe & Telegram -->
-        <div class="bg-slate-900 rounded-3xl p-8 md:p-12 text-white mb-16 relative overflow-hidden shadow-xl">
-            <!-- Decorative background element -->
-            <div class="absolute -right-20 -top-20 w-64 h-64 bg-brand-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-            
-            <div class="relative z-10">
-                <div class="flex items-center mb-4">
-                    <i class="fas fa-cogs text-brand-400 text-3xl mr-4"></i>
-                    <h2 class="text-2xl md:text-3xl font-bold">Admin Guide: Automation & ExtraPe</h2>
-                </div>
-                
-                <p class="text-gray-300 mb-6 max-w-3xl leading-relaxed">
-                    This website is ready for action. Here is how you connect your ExtraPe earnings and automate deals directly from your Telegram channel.
-                </p>
-
-                <div class="grid md:grid-cols-2 gap-8">
-                    <!-- Step 1: ExtraPe -->
-                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-                        <div class="w-10 h-10 bg-brand-500 rounded-full flex items-center justify-center font-bold mb-4">1</div>
-                        <h3 class="text-xl font-bold mb-2">Monetize with ExtraPe</h3>
-                        <p class="text-sm text-gray-400 mb-4">You don't need code to connect ExtraPe. Just generate affiliate links.</p>
-                        <ul class="text-sm text-gray-300 space-y-2 mb-4">
-                            <li><i class="fas fa-check text-green-400 mr-2"></i> Find a deal on Flipkart/Amazon.</li>
-                            <li><i class="fas fa-check text-green-400 mr-2"></i> Open ExtraPe App, paste the URL in "Make Profit Link".</li>
-                            <li><i class="fas fa-check text-green-400 mr-2"></i> Copy the shortened ExtraPe URL.</li>
-                        </ul>
-                        <div class="bg-black/50 p-3 rounded-lg border border-slate-600 font-mono text-xs text-green-400 break-all">
-                            &lt;a href="YOUR_EXTRAPE_LINK_HERE"&gt;Get Deal&lt;/a&gt;
-                        </div>
-                    </div>
-
-                    <!-- Step 2: Telegram -->
-                    <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-                        <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center font-bold mb-4"><i class="fab fa-telegram-plane"></i></div>
-                        <h3 class="text-xl font-bold mb-2">Auto-Fetch from Telegram</h3>
-                        <p class="text-sm text-gray-400 mb-4">To make the "Live Feed" work without manual HTML editing, use this architecture:</p>
-                        <ul class="text-sm text-gray-300 space-y-2">
-                            <li><b class="text-white">A.</b> Add a Bot to your Telegram Channel.</li>
-                            <li><b class="text-white">B.</b> Use <a href="#" class="text-brand-400 underline">Make.com</a> (Zapier alternative). Set trigger: <i>"Watch Telegram Channel"</i>.</li>
-                            <li><b class="text-white">C.</b> Set action: <i>"Add Row to Google Sheets / Firebase"</i>.</li>
-                            <li><b class="text-white">D.</b> Connect this HTML site to that Database (Ask AI to add Firebase configuration!).</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Newsletter -->
-        <div class="bg-brand-50 rounded-3xl p-8 md:p-12 text-center border border-brand-100">
-            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Never Miss a Loot Deal Again!</h2>
-            <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Join our Telegram channel and subscribe to our newsletter for instant price drop alerts in India.</p>
-            <form class="max-w-md mx-auto flex gap-2">
-                <input type="email" placeholder="Enter your email address" class="flex-1 px-5 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent">
-                <button type="button" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 px-6 rounded-xl transition-colors shadow-lg shadow-brand-500/30">
-                    Subscribe
-                </button>
-            </form>
         </div>
 
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 py-12 mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="flex items-center mb-4 md:mb-0">
-                    <i class="fas fa-tags text-brand-600 text-2xl mr-2"></i>
-                    <span class="font-black text-xl tracking-tight text-gray-900">Deal<span class="text-brand-600">Hunterz</span></span>
-                </div>
-                <div class="flex space-x-6 text-gray-500">
-                    <a href="#" class="hover:text-brand-600 transition-colors"><i class="fab fa-telegram text-xl"></i></a>
-                    <a href="#" class="hover:text-brand-600 transition-colors"><i class="fab fa-twitter text-xl"></i></a>
-                    <a href="#" class="hover:text-brand-600 transition-colors"><i class="fab fa-instagram text-xl"></i></a>
-                </div>
-            </div>
-            <div class="mt-8 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-                <p>&copy; 2024 Deal Hunterz India. All rights reserved.</p>
-                <div class="flex space-x-4 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-brand-600">Privacy Policy</a>
-                    <a href="#" class="hover:text-brand-600">Terms of Service</a>
-                    <a href="#" class="hover:text-brand-600">Contact Us</a>
-                </div>
-            </div>
+    <footer class="bg-white border-t border-gray-200 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-500">
+            <p>&copy; 2026 Deal Hunterz India. Powered by automated feeds & ExtraPe.</p>
         </div>
     </footer>
 
-    <!-- Navbar scroll effect & Telegram Simulation -->
-    <script type="module">
-        // Import Firebase (Google's Database)
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <script>
+        // ==========================================
+        // CONFIGURATION: AAPKI SHEET ID CONNECT HO CHUKI HAI
+        // ==========================================
+        const GOOGLE_SHEET_ID = "18doLFWcA16yLpPjOo2gZVUPZSSm3MJicXHkbPEjzjFs";
+        const SHEET_NAME = "Sheet1";
 
-        // YAHAN APNA FIREBASE CONFIG DAALNA HAI (Step 1 me milega)
-        const firebaseConfig = {
-            apiKey: "AIzaSyCUqkvT-uGTFHUpFFtuiPXml2g6E5Pr1as",
-            authDomain: "dealhunterz.firebaseapp.com",
-            projectId: "dealhunterz",
-            storageBucket: "dealhunterz.firebasestorage.app",
-            messagingSenderId: "851253326471",
-            appId: "1:851253326471:web:194b1cd035b5f44578fe22",
-            measurementId: "G-JZ5VEERSQ6"
-        };
+        let allDeals = [];
+        let currentFilter = 'all';
 
-        // Initialize Firebase
-        let app;
-        let db;
-        try {
-            app = initializeApp(firebaseConfig);
-            db = getFirestore(app);
-            console.log("Firebase Connected!");
-        } catch (error) {
-            console.error("Firebase connection error:", error);
+        // Extract URL from Telegram message if link isn't separated
+        function extractUrl(text) {
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            const matches = text.match(urlRegex);
+            return matches ? matches[0] : '#';
         }
 
-        // Navbar glass effect on scroll
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 10) {
-                nav.classList.add('shadow-md');
-                nav.classList.remove('shadow-sm');
-            } else {
-                nav.classList.remove('shadow-md');
-                nav.classList.add('shadow-sm');
-            }
-        });
-
-        // CATEGORY FILTERING LOGIC
-        window.filterDeals = function(category, buttonElement) {
-            // 1. Update Title
-            const titleElement = document.getElementById('grid-title');
-            if (category === 'all') {
-                titleElement.innerText = "Trending Deals in India";
-            } else {
-                titleElement.innerText = category.charAt(0).toUpperCase() + category.slice(1) + " Deals";
-            }
-
-            // 2. Change Button Styles (Active State)
-            const allButtons = document.querySelectorAll('.category-btn');
-            allButtons.forEach(btn => {
-                // Reset styles
-                btn.className = "category-btn whitespace-nowrap px-4 py-1.5 rounded-full text-gray-600 hover:bg-gray-100 font-medium text-sm transition-colors";
-            });
-            // Set active styles to clicked button
-            buttonElement.className = "category-btn active whitespace-nowrap px-4 py-1.5 rounded-full bg-brand-50 text-brand-700 font-semibold text-sm border border-brand-200 transition-colors";
-
-            // 3. Show/Hide Deal Cards
-            const allCards = document.querySelectorAll('.deal-card');
-            allCards.forEach(card => {
-                if (category === 'all' || card.getAttribute('data-category') === category) {
-                    card.style.display = "flex"; // Show
-                } else {
-                    card.style.display = "none"; // Hide
-                }
-            });
-        };
-
-        // NEW: SMART CATEGORY AUTO-DETECTOR
-        function autoDetectCategory(text) {
-            text = text.toLowerCase();
-            
-            const keywords = {
-                electronics: ['mobile', 'phone', 'tv', 'laptop', 'earbuds', 'samsung', 'apple', 'smartwatch', 'speaker', 'headphones'],
-                fashion: ['shoes', 'shirt', 'tshirt', 'jeans', 'myntra', 'puma', 'adidas', 'wear', 'sneakers', 'clothing'],
-                beauty: ['shampoo', 'cream', 'lotion', 'makeup', 'nykaa', 'mamaearth', 'face', 'wash', 'serum'],
-                home: ['kitchen', 'bottle', 'bedsheet', 'cooker', 'appliance', 'mixer', 'furniture', 'decor']
-            };
-
-            for (const [category, words] of Object.entries(keywords)) {
-                if (words.some(word => text.includes(word))) {
-                    return category;
-                }
-            }
-            return 'other'; // Default agar kuch match na ho
+        // Clean text by removing link from description
+        function cleanMessage(text) {
+            return text.replace(/(https?:\/\/[^\s]+)/g, '').trim();
         }
 
-        // FETCH REAL TELEGRAM DEALS FROM FIREBASE
-        function loadLiveTelegramDeals() {
-            const feedContainer = document.getElementById('telegram-feed');
-            
-            if (!db) {
-                feedContainer.innerHTML = '<div class="text-red-500 text-sm p-4">Firebase not connected. Please add your config.</div>';
+        // Keyword based category detection
+        function getCategory(text) {
+            text = (text || "").toLowerCase();
+            if (/mobile|phone|tv|laptop|earbuds|samsung|apple|smartwatch|speaker|boat|noise|gadget|charger|headphone/.test(text)) {
+                return 'electronics';
+            }
+            if (/shoes|shirt|tshirt|jeans|puma|adidas|nike|kurti|dress|wear|sneaker|hoodie|jacket|cloth/.test(text)) {
+                return 'fashion';
+            }
+            if (/shampoo|cream|lotion|serum|lipstick|makeup|perfume|facewash|nykaa|mamaearth|beauty/.test(text)) {
+                return 'beauty';
+            }
+            if (/kitchen|bottle|bedsheet|cooker|mixer|furniture|pan|utensil|vacuum|home/.test(text)) {
+                return 'home';
+            }
+            return 'other';
+        }
+
+        // Detect Store
+        function detectStore(text, link) {
+            const combined = (text + " " + link).toLowerCase();
+            if (combined.includes('amazon') || combined.includes('amzn')) return { name: 'Amazon', badge: 'bg-amber-100 text-amber-800 border-amber-300' };
+            if (combined.includes('flipkart') || combined.includes('fkrt')) return { name: 'Flipkart', badge: 'bg-blue-100 text-blue-800 border-blue-300' };
+            if (combined.includes('myntra')) return { name: 'Myntra', badge: 'bg-pink-100 text-pink-800 border-pink-300' };
+            if (combined.includes('nykaa')) return { name: 'Nykaa', badge: 'bg-rose-100 text-rose-800 border-rose-300' };
+            return { name: 'Loot Deal', badge: 'bg-orange-100 text-orange-800 border-orange-300' };
+        }
+
+        // Fetch deals directly from Google Sheets
+        async function fetchSheetDeals() {
+            const container = document.getElementById('deals-container');
+            const countLabel = document.getElementById('deal-count');
+
+            const url = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
+
+            try {
+                const response = await fetch(url);
+                const rawText = await response.text();
+                const jsonText = rawText.substring(rawText.indexOf('{'), rawText.lastIndexOf('}') + 1);
+                const data = JSON.parse(jsonText);
+
+                const rows = data.table.rows || [];
+                allDeals = rows.map(r => {
+                    const c = r.c || [];
+                    const rawMsg = c[1]?.v || "";
+                    let dealUrl = c[2]?.v;
+
+                    // If column C is empty or same as text, extract link from text
+                    if (!dealUrl || dealUrl.includes(' ') || dealUrl === rawMsg) {
+                        dealUrl = extractUrl(rawMsg);
+                    }
+
+                    return {
+                        date: c[0]?.f || c[0]?.v || "Recent",
+                        message: rawMsg,
+                        displayMessage: cleanMessage(rawMsg) || rawMsg,
+                        link: dealUrl,
+                        category: getCategory(rawMsg)
+                    };
+                }).filter(d => d.message && d.message.trim() !== "").reverse();
+
+                renderDeals(allDeals);
+                countLabel.innerText = `${allDeals.length} Deals`;
+            } catch (err) {
+                console.error("Sheet fetch error:", err);
+                container.innerHTML = `
+                    <div class="col-span-full bg-amber-50 text-amber-800 p-6 rounded-2xl text-center border border-amber-200">
+                        <p class="font-bold">Google Sheet Share Permission Check Karein!</p>
+                        <p class="text-sm mt-1">Google Sheet ke upar 'Share' dabakar 'Anyone with link can view' set karein taaki website data padh sake.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Render Cards
+        function renderDeals(deals) {
+            const container = document.getElementById('deals-container');
+            const filtered = deals.filter(deal => {
+                if (currentFilter === 'all') return true;
+                return deal.category === currentFilter;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full py-16 text-center text-gray-500">
+                        <i class="fas fa-inbox text-4xl mb-2 text-gray-300"></i>
+                        <p class="font-medium">Is category me abhi koi deal nahi hai.</p>
+                    </div>
+                `;
                 return;
             }
 
-            // Get live updates from 'telegram_deals' collection
-            const dealsRef = collection(db, 'telegram_deals');
-            
-            // Listen for changes in real-time
-            onSnapshot(dealsRef, (snapshot) => {
-                let html = '';
-                
-                if (snapshot.empty) {
-                    feedContainer.innerHTML = '<div class="text-gray-500 text-sm p-4">Waiting for new deals...</div>';
-                    return;
-                }
-
-                // Temporary array to hold deals before sorting
-                let deals = [];
-                snapshot.forEach((doc) => {
-                    deals.push({ id: doc.id, ...doc.data() });
-                });
-
-                // Sort by time (newest first)
-                deals.sort((a, b) => b.timestamp - a.timestamp);
-
-                deals.forEach(deal => {
-                    // Extract basic info from the deal
-                    const storeName = deal.store || 'Offer';
-                    const timeString = deal.timestamp ? new Date(deal.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Just now';
-                    const link = deal.affiliate_link || '#';
-                    
-                    // Automatically detect category based on message text!
-                    const autoCategory = autoDetectCategory(deal.message_text || "");
-                    const categoryTagColor = autoCategory === 'electronics' ? 'bg-blue-100 text-blue-700' : 
-                                             autoCategory === 'fashion' ? 'bg-pink-100 text-pink-700' : 
-                                             'bg-gray-100 text-gray-700';
-
-                    html += `
-                        <div class="bg-white p-4 rounded-xl shadow-sm border border-brand-100 min-w-[300px] max-w-[300px] flex flex-col hover:border-brand-300 transition-colors cursor-pointer group">
-                            <div class="flex justify-between items-center mb-2">
-                                <div class="flex space-x-2">
-                                    <span class="text-xs font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded">${storeName}</span>
-                                    <span class="text-[10px] font-bold px-2 py-0.5 rounded uppercase ${categoryTagColor}">${autoCategory}</span>
-                                </div>
-                                <span class="text-[10px] text-brand-500 font-medium"><i class="far fa-clock"></i> ${timeString}</span>
+            container.innerHTML = filtered.map(deal => {
+                const store = detectStore(deal.message, deal.link);
+                return `
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-lg transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${store.badge}">
+                                    ${store.name}
+                                </span>
+                                <span class="text-xs text-gray-400"><i class="far fa-clock"></i> ${deal.date}</span>
                             </div>
-                            <p class="text-sm font-medium text-gray-800 line-clamp-3 mb-3 group-hover:text-brand-700">${deal.message_text}</p>
-                            <a href="${link}" target="_blank" class="mt-auto text-xs font-bold text-white bg-brand-600 hover:bg-brand-700 text-center py-1.5 rounded transition-colors">Grab Deal &rarr;</a>
+                            <p class="text-gray-800 font-semibold text-sm leading-relaxed mb-4 line-clamp-4 group-hover:text-brand-600 transition-colors">
+                                ${deal.displayMessage}
+                            </p>
                         </div>
-                    `;
-                });
-
-                feedContainer.innerHTML = html;
-            }, (error) => {
-                console.error("Error fetching deals:", error);
-                feedContainer.innerHTML = '<div class="text-red-500 text-sm p-4">Error loading deals. Check permissions.</div>';
-            });
+                        <a href="${deal.link}" target="_blank" rel="noopener noreferrer" 
+                           class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-2.5 px-4 rounded-xl text-center text-sm shadow-md shadow-brand-500/20 transition-all flex items-center justify-center gap-2">
+                            <span>Grab Deal</span>
+                            <i class="fas fa-external-link-alt text-xs"></i>
+                        </a>
+                    </div>
+                `;
+            }).join('');
         }
 
-        // Run on load
-        document.addEventListener('DOMContentLoaded', loadLiveTelegramDeals);
+        // Category Filter function
+        function filterCategory(cat, btn) {
+            currentFilter = cat;
+            document.querySelectorAll('.cat-pill').forEach(b => {
+                b.className = "cat-pill px-4 py-1.5 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 font-medium text-sm transition-all";
+            });
+            btn.className = "cat-pill active px-4 py-1.5 rounded-full bg-brand-500 text-white font-semibold text-sm transition-all shadow-sm";
+            renderDeals(allDeals);
+        }
+
+        // Search Deals
+        function searchDeals() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const matched = allDeals.filter(d => d.message.toLowerCase().includes(query));
+            renderDeals(matched);
+        }
+
+        // Load Deals on page open
+        document.addEventListener('DOMContentLoaded', fetchSheetDeals);
     </script>
 </body>
 </html>
